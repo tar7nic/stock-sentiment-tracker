@@ -1,0 +1,38 @@
+name: Stock Sentiment Pipeline
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  
+  workflow_dispatch:          
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch stock prices
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python fetch_prices.py
+
+      - name: Fetch news
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        run: python fetch_news.py
+
+      - name: Score sentiment
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python sentiment_score.py
