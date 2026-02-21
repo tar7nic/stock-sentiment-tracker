@@ -3,6 +3,7 @@ import yfinance as yf
 import pandas as pd
 import streamlit.components.v1 as components
 from datetime import datetime
+import pytz
 
 # Page config
 st.set_page_config(
@@ -55,7 +56,9 @@ st.dataframe(
     use_container_width=True
 )
 
-st.caption(f"Last updated: {datetime.now().strftime('%d %b %Y, %I:%M %p')}")
+ist = pytz.timezone('Asia/Kolkata')
+current_time = datetime.now(ist).strftime('%d %b %Y, %I:%M %p')
+st.caption(f"Last updated: {current_time} IST")
 
 # Divider
 st.divider()
