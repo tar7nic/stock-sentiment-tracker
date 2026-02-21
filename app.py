@@ -21,7 +21,7 @@ TICKERS = [
     'AAPL', 'MSFT', 'GOOGL', 'TSLA', 'NVDA', 'AMZN'
 ]
 
-@st.cache_data(ttl=300)  # refresh every 5 minutes
+@st.cache_data(ttl=75)  # refresh every 5 minutes
 def get_live_prices():
     data = []
     for ticker in TICKERS:
@@ -42,6 +42,7 @@ def color_change(val):
     color = 'green' if val > 0 else 'red'
     return f'color: {color}'
 
+df.index = range(1,len(df) + 1)
 st.dataframe(
     df.style.applymap(color_change, subset=['Change %']),
     use_container_width=True
