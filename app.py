@@ -14,8 +14,8 @@ st.set_page_config(
 st.title("Stock Sentiment Tracker")
 st.markdown("""
 This app monitors **10 global stocks** (Indian & US) in real time by combining 
-live price data with news sentiment analysis. Prices refresh every 60 seconds 
-and the sentiment dashboard updates every 12 hours automatically.
+live price data with news sentiment analysis. \nPrices refresh every 60 seconds 
+and the sentiment dashboard updates every 6 hours automatically.
 """)
 
 st.divider()
