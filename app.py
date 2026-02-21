@@ -2,6 +2,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 import streamlit.components.v1 as components
+from datetime import datetime
 
 # Page config
 st.set_page_config(
@@ -11,7 +12,13 @@ st.set_page_config(
 
 # Title
 st.title("Stock Sentiment Tracker")
-st.markdown("Real-time stock prices and sentiment analysis for 10 global stocks.")
+st.markdown("""
+This app monitors **10 global stocks** (Indian & US) in real time by combining 
+live price data with news sentiment analysis. Prices refresh every 60 seconds 
+and the sentiment dashboard updates every 12 hours automatically.
+""")
+
+st.divider()
 
 # Live price ticker
 st.subheader("🔴 Live Stock Prices")
@@ -21,7 +28,7 @@ TICKERS = [
     'AAPL', 'MSFT', 'GOOGL', 'TSLA', 'NVDA', 'AMZN'
 ]
 
-@st.cache_data(ttl=75)  # refresh every 5 minutes
+@st.cache_data(ttl=60)  
 def get_live_prices():
     data = []
     for ticker in TICKERS:
@@ -47,6 +54,8 @@ st.dataframe(
     df.style.applymap(color_change, subset=['Change %']),
     use_container_width=True
 )
+
+st.caption(f"Last updated: {datetime.now().strftime('%d %b %Y, %I:%M %p')}")
 
 # Divider
 st.divider()
