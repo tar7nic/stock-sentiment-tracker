@@ -52,7 +52,7 @@ def color_change(val):
 
 df.index = range(1,len(df) + 1)
 st.dataframe(
-    df.style.applymap(color_change, subset=['Change %']),
+    df.style.map(color_change, subset=['Change %']),
     use_container_width=True
 )
 
